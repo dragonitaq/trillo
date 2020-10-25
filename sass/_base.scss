@@ -1,0 +1,79 @@
+/* ############################# SASS variables ############################# */
+
+$bp-largest: 75em; // 1200px
+$bp-large: 68.75em; // 1100px
+$bp-medium: 56.25em; // 900px
+$bp-small: 37.5em; // 600px
+$bp-smallest: 31.25em; // 500px
+
+
+/* ############################## CSS variables ############################# */
+
+/* We can now use CSS variable (AKA CSS custom property). The advantages of using CSS variables over SASS variables are they can be manipulated using JavaScript, edit in dev tools, cascade, and they are inherited.
+CSS variables are block scope, so we put CSS variables here in root so that they can access from entire document.
+We must use double dashes to declare custom properties.
+Note: CSS variable doesn't work in media query! We have to use SASS! */
+:root {
+  --color-primary: #eb2f64;
+  --color-primary-light: #ff3366;
+  --color-primary-dark: #ba265d;
+  --color-grey-light-1: #faf9f9;
+  --color-grey-light-2: #f4f2f2;
+  --color-grey-light-3: #f0eeee;
+  --color-grey-light-4: #ccc;
+  --color-grey-dark-1: #333;
+  --color-grey-dark-2: #777;
+  --color-grey-dark-3: #999;
+
+  --shadow-dark: 0 2rem 6rem rgba(0, 0, 0, 0.3);
+  --shadow-light: 0 2rem 5 rem rgba(0, 0, 0, 0.06);
+
+  /* Variable below consists of another variable and that is perfectly fine. */
+  --line: 0.1rem solid var(--color-grey-light-2)
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; // 1rem = 10px
+
+  @media (max-width: $bp-large) {
+    font-size: 50%;
+  }
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-Grey-dark-2);
+  background-image: linear-gradient(to right bottom, var(--color-primary-light), var(--color-primary-dark));
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+/* ########################################################################## */
+
+/*
+??? Question:
+Why inherit Box-sizing instead of writing it off directly into *
+When we configure the universal selector to inherit a box-sizing value, we gear up our code for flexibility.
+
+!!! Answer:
+Suppose that in the first version of our code we explicitly set a box-sizing of border-box for the universal selector. In a subsequent version, we add an HTML section containing multiple child elements to the code. We want this section, as well as its children, to have a box-sizing value of content-box.
+
+Now, as border-box is hard coded as the box sizing for every element in our code, we cannot just set a different box sizing for the new section and expect its children to inherit this box-sizing value. We will also have to explicitly define a box-sizing value for each of its child elements. This won't be much of a problem if the section has only a few descendants. But if its descendants are added dynamically, we will have to add extra code to make sure these descendants get the desired box-sizing value.
+
+A simpler workaround is to set the universal selector to inherit a box-sizing value. Then we can set a different box sizing for the new section and be sure that all its descendants will automatically inherit the section's box sizing.
+*/

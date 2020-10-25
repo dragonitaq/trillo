@@ -1,0 +1,600 @@
+/* ############################# SASS variables ############################# */
+/* ############################## CSS variables ############################# */
+/* We can now use CSS variable (AKA CSS custom property). The advantages of using CSS variables over SASS variables are they can be manipulated using JavaScript, edit in dev tools, cascade, and they are inherited.
+CSS variables are block scope, so we put CSS variables here in root so that they can access from entire document.
+We must use double dashes to declare custom properties.
+Note: CSS variable doesn't work in media query! We have to use SASS! */
+:root {
+  --color-primary: #eb2f64;
+  --color-primary-light: #ff3366;
+  --color-primary-dark: #ba265d;
+  --color-grey-light-1: #faf9f9;
+  --color-grey-light-2: #f4f2f2;
+  --color-grey-light-3: #f0eeee;
+  --color-grey-light-4: #ccc;
+  --color-grey-dark-1: #333;
+  --color-grey-dark-2: #777;
+  --color-grey-dark-3: #999;
+  --shadow-dark: 0 2rem 6rem rgba(0, 0, 0, 0.3);
+  --shadow-light: 0 2rem 5 rem rgba(0, 0, 0, 0.06);
+  /* Variable below consists of another variable and that is perfectly fine. */
+  --line: 0.1rem solid var(--color-grey-light-2)
+; }
+
+* {
+  padding: 0;
+  margin: 0; }
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit; }
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; }
+  @media (max-width: 68.75em) {
+    html {
+      font-size: 50%; } }
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-Grey-dark-2);
+  background-image: linear-gradient(to right bottom, var(--color-primary-light), var(--color-primary-dark));
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh; }
+
+/* ########################################################################## */
+/*
+??? Question:
+Why inherit Box-sizing instead of writing it off directly into *
+When we configure the universal selector to inherit a box-sizing value, we gear up our code for flexibility.
+
+!!! Answer:
+Suppose that in the first version of our code we explicitly set a box-sizing of border-box for the universal selector. In a subsequent version, we add an HTML section containing multiple child elements to the code. We want this section, as well as its children, to have a box-sizing value of content-box.
+
+Now, as border-box is hard coded as the box sizing for every element in our code, we cannot just set a different box sizing for the new section and expect its children to inherit this box-sizing value. We will also have to explicitly define a box-sizing value for each of its child elements. This won't be much of a problem if the section has only a few descendants. But if its descendants are added dynamically, we will have to add extra code to make sure these descendants get the desired box-sizing value.
+
+A simpler workaround is to set the universal selector to inherit a box-sizing value. Then we can set a different box sizing for the new section and be sure that all its descendants will automatically inherit the section's box sizing.
+*/
+.container {
+  max-width: 120rem;
+  margin: 8rem auto;
+  background-color: var(--color-grey-light-2);
+  box-shadow: var(--shadow-dark);
+  min-height: 50rem; }
+  @media (max-width: 75em) {
+    .container {
+      margin: 0;
+      max-width: 100%;
+      width: 100%; } }
+
+.header {
+  font-size: 1.4rem;
+  height: 7rem;
+  background-color: #fff;
+  border-bottom: var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+  @media (max-width: 31.25em) {
+    .header {
+      flex-wrap: wrap;
+      align-content: space-around;
+      height: 11rem; } }
+
+.content {
+  display: flex; }
+  @media (max-width: 56.25em) {
+    .content {
+      flex-direction: column; } }
+
+.sidebar {
+  background-color: var(--color-grey-dark-1);
+  flex: 0 0 18%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
+
+.hotel-view {
+  background-color: #fff;
+  flex: 1; }
+
+.detail {
+  font-size: 1.4rem;
+  display: flex;
+  padding: 4.5rem;
+  background-color: var(--color-grey-light-1);
+  border-bottom: var(--line); }
+  @media (max-width: 56.25em) {
+    .detail {
+      padding: 3rem; } }
+  @media (max-width: 37.5em) {
+    .detail {
+      flex-direction: column; } }
+
+.description {
+  background-color: #fff;
+  box-shadow: var(--shadow-light);
+  flex: 0 0 60%;
+  padding: 4.5rem;
+  margin-right: 4.5rem; }
+  @media (max-width: 56.25em) {
+    .description {
+      padding: 2rem;
+      margin-right: 3rem; } }
+  @media (max-width: 37.5em) {
+    .description {
+      margin-right: 0;
+      margin-bottom: 3rem; } }
+
+.user-reviews {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+/* ########################################################################## */
+/*                                    Logo                                    */
+/* ########################################################################## */
+.logo {
+  height: 3.25rem;
+  margin-left: 2rem; }
+
+/* ########################################################################## */
+/*                                   Search                                   */
+/* ########################################################################## */
+.search {
+  flex: 0 0 40%;
+  /* Here we have a nested flexbox which we set display:flex for flex items. It is common practice. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* + sign is adjacent sibling combinator. It selects and styles every &__button element that are placed immediately after (not inside) &__input element when it is in focus mode. */ }
+  @media (max-width: 31.25em) {
+    .search {
+      order: 1;
+      flex: 0 0 100%;
+      padding-right: 1.2rem; } }
+  .search__input {
+    /* Input element doesn't automatically inherit font-family, font-size & font color from global setting. We have to set it explicitly. */
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    background-color: var(--color-grey-light-2);
+    border: none;
+    padding: 0.7rem 2rem;
+    border-radius: 100px;
+    width: 90%;
+    transition: all 0.5s;
+    /* We set negative value on right so that the search icon can move in left. */
+    margin-right: -3.25rem;
+    /* Make the input placeholder text change color. */ }
+    .search__input:focus {
+      /* Some elements have outline which is unique to them. */
+      outline: none;
+      width: 100%;
+      background-color: var(--color-grey-light-3); }
+    .search__input::-webkit-input-placeholder {
+      font-weight: 100;
+      color: var(--color-grey-light-4); }
+  .search__input:focus + .search__button {
+    background-color: var(--color-grey-light-3); }
+  .search__button {
+    border: none;
+    background-color: var(--color-grey-light-2); }
+    .search__button:focus {
+      outline: none; }
+    .search__button:active {
+      /* Make button appear little down when being pressed. */
+      transform: translateY(2px); }
+  .search__icon {
+    height: 2rem;
+    width: 2rem;
+    /* To fill color of the icon. */
+    fill: var(--color-grey-dark-3); }
+
+/* ########################################################################## */
+/*                               User navigation                              */
+/* ########################################################################## */
+.user-nav {
+  display: flex;
+  align-items: stretch;
+  align-self: stretch;
+  /* Using > sign will select all direct children elements of its type. Since we use universal selector here, which means we selected all direct children elements of any types. */ }
+  .user-nav > * {
+    padding: 0 2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center; }
+  .user-nav > *:hover {
+    background-color: var(--color-grey-light-2); }
+  .user-nav__icon-box {
+    /* We use relative here because the notification number is using absolute positioning. This will make sure all absolute positioning values stay inside this container which is relative positioning to its parent. */
+    position: relative; }
+  .user-nav__icon {
+    height: 2.5rem;
+    width: 2.5rem;
+    fill: var(--color-grey-dark-2); }
+  .user-nav__notification {
+    font-size: 0.8rem;
+    height: 1.75rem;
+    width: 1.75rem;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    color: #fff;
+    position: absolute;
+    top: 1.5rem;
+    right: 1.1rem;
+    /* We can also use flexbox for text within it! */
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+  .user-nav__user-photo {
+    height: 3.75rem;
+    border-radius: 50%;
+    margin-right: 1rem; }
+
+/* ########################################################################## */
+/*                               Side Navigation                              */
+/* ########################################################################## */
+.side-nav {
+  font-size: 1.4rem;
+  list-style: none;
+  margin-top: 3.5rem;
+  /* It is good to remove the wording under the icon and then make the icons bigger. It is good for phone size. I don't do it because I leave it for later optimization. */ }
+  @media (max-width: 56.25em) {
+    .side-nav {
+      display: flex;
+      justify-content: space-around;
+      margin: 0; } }
+  .side-nav__item {
+    position: relative; }
+    .side-nav__item:not(:last-child) {
+      margin-bottom: 0.5rem; }
+      @media (max-width: 56.25em) {
+        .side-nav__item:not(:last-child) {
+          margin: 0; } }
+    @media (max-width: 56.25em) {
+      .side-nav__item {
+        flex: 1; } }
+    .side-nav__item::before {
+      content: '';
+      position: absolute;
+      top: 0%;
+      left: 0%;
+      height: 100%;
+      width: 0.3rem;
+      background-color: var(--color-primary);
+      transform: scaleY(0);
+      transition: transform 0.2s, width 0.4s cubic-bezier(1, 0, 0, 1) 0.2s, background-color 0.1s; }
+    .side-nav__item:hover::before, .side-nav__item--active::before {
+      transform: scaleY(1);
+      width: 100%; }
+    .side-nav__item:active::before {
+      background-color: var(--color-primary-light); }
+  .side-nav__link:link, .side-nav__link:visited {
+    text-decoration: none;
+    color: var(--color-grey-light-1);
+    text-transform: uppercase;
+    /* We set as block here because it is anchor element which is an inline element. But it is not necessary as we already set it as flex. */
+    padding: 1.5rem 3rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+    /* To use z-index, we must have the element explicitly define its position. */
+    z-index: 1; }
+    @media (max-width: 56.25em) {
+      .side-nav__link:link, .side-nav__link:visited {
+        /* We don't use text-align because they are flex items. */
+        justify-content: center;
+        padding: 2rem; } }
+    @media (max-width: 37.5em) {
+      .side-nav__link:link, .side-nav__link:visited {
+        flex-direction: column;
+        padding: 1.5 0.5rem; } }
+  .side-nav__icon {
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-right: 2rem;
+    /* currentColor denotes the same color as current or parent element. */
+    fill: currentColor; }
+    @media (max-width: 37.5em) {
+      .side-nav__icon {
+        margin-right: 0;
+        margin-bottom: 0.7rem;
+        width: 1.5rem;
+        height: 1.5rem; } }
+
+/* ########################################################################## */
+/*                                    Legal                                   */
+/* ########################################################################## */
+.legal {
+  font-size: 1.2rem;
+  color: var(--color-grey-light-4);
+  text-align: center;
+  padding: 2.5rem; }
+  @media (max-width: 56.25em) {
+    .legal {
+      display: none; } }
+
+/* ########################################################################## */
+/*                                   Gallery                                  */
+/* ########################################################################## */
+.gallery {
+  display: flex; }
+  .gallery__photo {
+    /* For responsive design, we always define image with % value.  */
+    width: 100%;
+    /* Because image is an inline element sit inside the <figure> element, it creates a small space beneath the image. To prevent this, we set it to block. */
+    display: block; }
+
+/* ########################################################################## */
+/*                                  Overview                                  */
+/* ########################################################################## */
+.overview {
+  display: flex;
+  align-items: center;
+  border-bottom: var(--line); }
+  .overview__heading {
+    font-size: 2.25rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    padding: 1.5rem 3rem; }
+    @media (max-width: 37.5em) {
+      .overview__heading {
+        font-size: 1.8rem;
+        padding: 1.25rem 2rem; } }
+  .overview__stars {
+    margin-right: auto;
+    display: flex;
+    align-items: center; }
+  .overview__icon-star, .overview__icon-location {
+    height: 1.75rem;
+    width: 1.75rem;
+    fill: var(--color-primary); }
+  .overview__location {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center; }
+  .overview__icon-location {
+    margin-right: 0.5rem; }
+  .overview__rating {
+    background-color: var(--color-primary);
+    color: #fff;
+    margin-left: 3rem;
+    align-self: stretch;
+    padding: 0 2.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; }
+    @media (max-width: 37.5em) {
+      .overview__rating {
+        padding: 0 1.5rem; } }
+  .overview__rating-average {
+    font-size: 2.25rem;
+    font-weight: 300;
+    margin-bottom: -0.3rem; }
+    @media (max-width: 37.5em) {
+      .overview__rating-average {
+        font-size: 1.8rem; } }
+  .overview__rating-count {
+    font-size: 0.8rem;
+    text-transform: uppercase; }
+    @media (max-width: 37.5em) {
+      .overview__rating-count {
+        font-size: 0.5rem; } }
+
+/* ########################################################################## */
+/*                                   Buttons                                  */
+/* ########################################################################## */
+.btn-inline {
+  /* Because button always comes with default border line. */
+  border: none;
+  color: var(--color-primary);
+  font-size: inherit;
+  /* Because we want to animate this button, so by setting currentColor, when it is animated, it will have the same color as this element itself. */
+  border-bottom: 0.1rem solid currentColor;
+  padding-bottom: 0.2rem;
+  /* Because we will use the same button on different places with different background, so we better set it to transparent so that it suit better. */
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.2s; }
+  .btn-inline span {
+    margin-left: 0.3rem;
+    transition: margin-left 0.2s; }
+  .btn-inline:hover {
+    color: var(--color-grey-dark-1); }
+    .btn-inline:hover span {
+      margin-left: 0.8rem; }
+  .btn-inline:focus {
+    /* Becase once we click the button, by default it will have an outline. */
+    outline: none;
+    animation: pulsate 1s infinite; }
+
+/* ########################################################################## */
+/*                                 Description                                */
+/* ########################################################################## */
+/* We specify all paragraph to have margin-bottom value except the last one. */
+.paragraph:not(:last-of-type) {
+  margin-bottom: 2rem; }
+
+/* ########################################################################## */
+/*                                    List                                    */
+/* ########################################################################## */
+.list {
+  list-style: none;
+  margin: 3rem 0;
+  padding: 3rem 0;
+  border-top: var(--line);
+  border-bottom: var(--line);
+  display: flex;
+  flex-wrap: wrap; }
+  .list__item {
+    flex: 0 0 50%;
+    margin-bottom: 0.7rem; }
+  .list__item::before {
+    content: '';
+    display: inline-block;
+    height: 1rem;
+    width: 1rem;
+    margin-right: 0.7rem;
+    /* Method for old browsers. */
+    background-image: url(../img/chevron-thin-right.svg);
+    background-size: cover;
+    /* We do feature query here. */ }
+    @supports (-webkit-mask-image: url()) or (mask-image: url()) {
+      .list__item::before {
+        /* Method for modern browsers. Using mask method, we will have a background color, then setting a image (mask) on top of it, we will then only see the background color through the shape of the mask  */
+        background-color: var(--color-primary);
+        -webkit-mask-image: url(../img/chevron-thin-right.svg);
+        mask-image: url(../img/chevron-thin-right.svg);
+        /* Scale the image, while preserving its intrinsic aspect ratio (if any), to the smallest size such that both its width and its height can completely cover the background positioning area. */
+        -webkit-mask-size: cover;
+        mask-size: cover;
+        /* Earlier, we set a background image for older browser to work. Now we have to remove it for mask-image & mask-size to work properly. */
+        background-image: none; } }
+
+/* ########################################################################## */
+/*                                  Recommend                                 */
+/* ########################################################################## */
+.recommend {
+  font-size: 1.3rem;
+  color: var(--color-grey-dark-3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between; }
+  .recommend__friends {
+    /* We set to flex because we want the pictures to always display side by side. Is a good trick to make things stay side by side. */
+    display: flex; }
+  .recommend__photo {
+    /* This is classic example why we sometime have to set the box-sizing back to the default (content-box). In this case, it is because when we add border to this tiny image, it will appear much smaller than we want. We can either to have bigger height & width or reset box-sizing property to its default to have the default box model architecture. This way, it is will not shrink the image further, instead it grows bigger as a result. */
+    box-sizing: content-box;
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    border: 0.3rem solid #fff; }
+    .recommend__photo:not(:last-child) {
+      margin-right: -1.5rem; }
+
+/* ########################################################################## */
+/*                                   Reviews                                  */
+/* ########################################################################## */
+.review {
+  background-color: #fff;
+  box-shadow: var(--shadow-light);
+  padding: 3rem;
+  margin-bottom: 3.5rem;
+  position: relative;
+  /* To fix the overflowing of the quotation mark */
+  overflow: hidden; }
+  @media (max-width: 56.25em) {
+    .review {
+      padding: 2rem;
+      margin-bottom: 3rem; } }
+  .review__text {
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 10; }
+  .review__user {
+    display: flex;
+    align-items: center; }
+  .review__photo {
+    height: 4.5rem;
+    width: 4.5rem;
+    border-radius: 50%;
+    margin-right: 1.5rem; }
+  .review__user-box {
+    margin-right: auto; }
+  .review__user-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem; }
+  .review__user-date {
+    font-size: 1rem;
+    color: var(--color-grey-dark-3); }
+  .review__rating {
+    color: var(--color-primary);
+    font-size: 2.2rem;
+    font-weight: 300; }
+  .review::before {
+    content: '\201C';
+    position: absolute;
+    top: -2.75rem;
+    left: -1rem;
+    font-size: 20rem;
+    font-family: sans-serif;
+    line-height: 1;
+    color: var(--color-grey-light-2);
+    z-index: 1; }
+
+/* ########################################################################## */
+/*                            CTA (call to action)                            */
+/* ########################################################################## */
+.cta {
+  padding: 3.5rem 0;
+  text-align: center; }
+  @media (max-width: 56.25em) {
+    .cta {
+      padding: 2.5rem 0; } }
+  .cta__book-now {
+    font-size: 2rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem; }
+
+/* ########################################################################## */
+/*                                 CTA Buttons                                */
+/* ########################################################################## */
+.btn {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #fff;
+  border: none;
+  text-transform: uppercase;
+  border-radius: 100px;
+  background-image: linear-gradient(to right, var(--color-primary-light), var(--color-primary-dark));
+  position: relative;
+  overflow: hidden;
+  cursor: pointer; }
+  .btn > * {
+    /* Set the inline <span> element become inline-block so that we can add padding to it. */
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    transition: all 0.2s; }
+  .btn__visible {
+    /* We deliberately use padding to make the button appear bigger. */
+    padding: 2rem 7.5rem; }
+  .btn__invisible {
+    padding: 2rem 0;
+    position: absolute;
+    left: 0;
+    top: -100%; }
+  .btn:hover {
+    /* This one we can't add transition property for it in its parent element because transition doesn't work for background gradient. */
+    background-image: linear-gradient(to left, var(--color-primary-light), var(--color-primary-dark)); }
+  .btn:hover .btn__visible {
+    transform: translateY(100%); }
+  .btn:hover .btn__invisible {
+    top: 0; }
+  .btn:focus {
+    outline: none;
+    animation: pulsate 1s infinite; }
+
+@keyframes pulsate {
+  0% {
+    transform: scale(1);
+    box-shadow: none; }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 1rem 4rem rgba(0, 0, 0, 0.25); }
+  100% {
+    transform: scale(1);
+    box-shadow: none; } }

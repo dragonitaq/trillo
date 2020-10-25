@@ -1,0 +1,611 @@
+/* ########################################################################## */
+/*                                    Logo                                    */
+/* ########################################################################## */
+
+.logo {
+  height: 3.25rem;
+  margin-left: 2rem;
+}
+
+/* ########################################################################## */
+/*                                   Search                                   */
+/* ########################################################################## */
+
+.search {
+  flex: 0 0 40%;
+  /* Here we have a nested flexbox which we set display:flex for flex items. It is common practice. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: $bp-smallest) {
+    order: 1;
+    flex: 0 0 100%;
+    padding-right: 1.2rem;
+  }
+
+  &__input {
+    /* Input element doesn't automatically inherit font-family, font-size & font color from global setting. We have to set it explicitly. */
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    background-color: var(--color-grey-light-2);
+    border: none;
+    padding: 0.7rem 2rem;
+    border-radius: 100px;
+    width: 90%;
+    transition: all 0.5s;
+    /* We set negative value on right so that the search icon can move in left. */
+    margin-right: -3.25rem;
+
+    &:focus {
+      /* Some elements have outline which is unique to them. */
+      outline: none;
+      width: 100%;
+      background-color: var(--color-grey-light-3);
+    }
+
+    /* Make the input placeholder text change color. */
+    &::-webkit-input-placeholder {
+      font-weight: 100;
+      color: var(--color-grey-light-4);
+    }
+  }
+
+  /* + sign is adjacent sibling combinator. It selects and styles every &__button element that are placed immediately after (not inside) &__input element when it is in focus mode. */
+  &__input:focus + &__button {
+    background-color: var(--color-grey-light-3);
+  }
+
+  &__button {
+    border: none;
+    background-color: var(--color-grey-light-2);
+
+    &:focus {
+      outline: none;
+    }
+
+    &:active {
+      /* Make button appear little down when being pressed. */
+      transform: translateY(2px);
+    }
+  }
+
+  &__icon {
+    height: 2rem;
+    width: 2rem;
+    /* To fill color of the icon. */
+    fill: var(--color-grey-dark-3);
+  }
+}
+
+/* ########################################################################## */
+/*                               User navigation                              */
+/* ########################################################################## */
+
+.user-nav {
+  display: flex;
+  align-items: stretch;
+  align-self: stretch;
+
+  /* Using > sign will select all direct children elements of its type. Since we use universal selector here, which means we selected all direct children elements of any types. */
+  & > * {
+    padding: 0 2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  & > *:hover {
+    background-color: var(--color-grey-light-2);
+  }
+
+  &__icon-box {
+    /* We use relative here because the notification number is using absolute positioning. This will make sure all absolute positioning values stay inside this container which is relative positioning to its parent. */
+    position: relative;
+  }
+
+  &__icon {
+    height: 2.5rem;
+    width: 2.5rem;
+    fill: var(--color-grey-dark-2);
+  }
+
+  &__notification {
+    font-size: 0.8rem;
+    height: 1.75rem;
+    width: 1.75rem;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    color: #fff;
+    position: absolute;
+    top: 1.5rem;
+    right: 1.1rem;
+    /* We can also use flexbox for text within it! */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__user-photo {
+    height: 3.75rem;
+    border-radius: 50%;
+    margin-right: 1rem;
+  }
+}
+
+/* ########################################################################## */
+/*                               Side Navigation                              */
+/* ########################################################################## */
+
+.side-nav {
+  font-size: 1.4rem;
+  list-style: none;
+  margin-top: 3.5rem;
+
+  @media (max-width: $bp-medium) {
+    display: flex;
+    justify-content: space-around;
+    margin: 0;
+  }
+
+  &__item {
+    position: relative;
+
+    &:not(:last-child) {
+      margin-bottom: 0.5rem;
+      @media (max-width: $bp-medium) {
+        margin: 0;
+      }
+    }
+
+    @media (max-width: $bp-medium) {
+      flex: 1;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0%;
+      left: 0%;
+      height: 100%;
+      width: 0.3rem;
+      background-color: var(--color-primary);
+      transform: scaleY(0);
+      transition: transform 0.2s, width 0.4s cubic-bezier(1, 0, 0, 1) 0.2s, background-color 0.1s;
+    }
+
+    &:hover::before,
+    &--active::before {
+      transform: scaleY(1);
+      width: 100%;
+    }
+
+    &:active::before {
+      background-color: var(--color-primary-light);
+    }
+  }
+
+  &__link:link,
+  &__link:visited {
+    text-decoration: none;
+    color: var(--color-grey-light-1);
+    text-transform: uppercase;
+    /* We set as block here because it is anchor element which is an inline element. But it is not necessary as we already set it as flex. */
+    // display: block;
+    padding: 1.5rem 3rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+    /* To use z-index, we must have the element explicitly define its position. */
+    z-index: 1;
+    @media (max-width: $bp-medium) {
+      /* We don't use text-align because they are flex items. */
+      justify-content: center;
+      padding: 2rem;
+    }
+    @media (max-width: $bp-small) {
+      flex-direction: column;
+      padding: 1.5 0.5rem;
+    }
+  }
+
+  &__icon {
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-right: 2rem;
+    /* currentColor denotes the same color as current or parent element. */
+    fill: currentColor;
+
+    @media (max-width: $bp-small) {
+      margin-right: 0;
+      margin-bottom: 0.7rem;
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+
+  /* It is good to remove the wording under the icon and then make the icons bigger. It is good for phone size. I don't do it because I leave it for later optimization. */
+  // & span {
+  //   @media (max-width: $bp-small) {
+  //     display: none;
+  //   }
+  // }
+}
+
+/* ########################################################################## */
+/*                                    Legal                                   */
+/* ########################################################################## */
+
+.legal {
+  font-size: 1.2rem;
+  color: var(--color-grey-light-4);
+  text-align: center;
+  padding: 2.5rem;
+
+  @media (max-width: $bp-medium) {
+    display: none;
+  }
+}
+
+/* ########################################################################## */
+/*                                   Gallery                                  */
+/* ########################################################################## */
+
+.gallery {
+  display: flex;
+
+  &__photo {
+    /* For responsive design, we always define image with % value.  */
+    width: 100%;
+    /* Because image is an inline element sit inside the <figure> element, it creates a small space beneath the image. To prevent this, we set it to block. */
+    display: block;
+  }
+}
+
+/* ########################################################################## */
+/*                                  Overview                                  */
+/* ########################################################################## */
+
+.overview {
+  display: flex;
+  align-items: center;
+  border-bottom: var(--line);
+
+  &__heading {
+    font-size: 2.25rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    padding: 1.5rem 3rem;
+
+    @media (max-width: $bp-small) {
+      font-size: 1.8rem;
+      padding: 1.25rem 2rem;
+    }
+  }
+
+  &__stars {
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+  }
+
+  &__icon-star,
+  &__icon-location {
+    height: 1.75rem;
+    width: 1.75rem;
+    fill: var(--color-primary);
+  }
+
+  &__location {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+  }
+
+  &__icon-location {
+    margin-right: 0.5rem;
+  }
+
+  &__rating {
+    background-color: var(--color-primary);
+    color: #fff;
+    margin-left: 3rem;
+    align-self: stretch;
+    padding: 0 2.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    @media (max-width: $bp-small) {
+      padding: 0 1.5rem;
+    }
+  }
+
+  &__rating-average {
+    font-size: 2.25rem;
+    font-weight: 300;
+    margin-bottom: -0.3rem;
+
+    @media (max-width: $bp-small) {
+      font-size: 1.8rem;
+    }
+  }
+
+  &__rating-count {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+
+    @media (max-width: $bp-small) {
+      font-size: 0.5rem;
+    }
+  }
+}
+
+/* ########################################################################## */
+/*                                   Buttons                                  */
+/* ########################################################################## */
+
+.btn-inline {
+  /* Because button always comes with default border line. */
+  border: none;
+  color: var(--color-primary);
+  font-size: inherit;
+  /* Because we want to animate this button, so by setting currentColor, when it is animated, it will have the same color as this element itself. */
+  border-bottom: 0.1rem solid currentColor;
+  padding-bottom: 0.2rem;
+  /* Because we will use the same button on different places with different background, so we better set it to transparent so that it suit better. */
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  & span {
+    margin-left: 0.3rem;
+    transition: margin-left 0.2s;
+  }
+
+  &:hover {
+    color: var(--color-grey-dark-1);
+
+    span {
+      margin-left: 0.8rem;
+    }
+  }
+
+  &:focus {
+    /* Becase once we click the button, by default it will have an outline. */
+    outline: none;
+    animation: pulsate 1s infinite;
+  }
+}
+
+/* ########################################################################## */
+/*                                 Description                                */
+/* ########################################################################## */
+
+/* We specify all paragraph to have margin-bottom value except the last one. */
+.paragraph:not(:last-of-type) {
+  margin-bottom: 2rem;
+}
+
+/* ########################################################################## */
+/*                                    List                                    */
+/* ########################################################################## */
+
+.list {
+  list-style: none;
+  margin: 3rem 0;
+  padding: 3rem 0;
+  border-top: var(--line);
+  border-bottom: var(--line);
+  display: flex;
+  flex-wrap: wrap;
+
+  &__item {
+    flex: 0 0 50%;
+    margin-bottom: 0.7rem;
+  }
+
+  &__item::before {
+    content: '';
+    display: inline-block;
+    height: 1rem;
+    width: 1rem;
+    margin-right: 0.7rem;
+
+    /* Method for old browsers. */
+    background-image: url(../img/chevron-thin-right.svg);
+    background-size: cover; 
+
+    /* We do feature query here. */
+    @supports (-webkit-mask-image: url()) or (mask-image: url()) {
+      /* Method for modern browsers. Using mask method, we will have a background color, then setting a image (mask) on top of it, we will then only see the background color through the shape of the mask  */
+      background-color: var(--color-primary);
+      -webkit-mask-image: url(../img/chevron-thin-right.svg);
+      mask-image: url(../img/chevron-thin-right.svg);
+      /* Scale the image, while preserving its intrinsic aspect ratio (if any), to the smallest size such that both its width and its height can completely cover the background positioning area. */
+      -webkit-mask-size: cover;
+      mask-size: cover;
+      /* Earlier, we set a background image for older browser to work. Now we have to remove it for mask-image & mask-size to work properly. */
+      background-image: none;
+    }
+  }
+}
+
+/* ########################################################################## */
+/*                                  Recommend                                 */
+/* ########################################################################## */
+
+.recommend {
+  font-size: 1.3rem;
+  color: var(--color-grey-dark-3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__friends {
+    /* We set to flex because we want the pictures to always display side by side. Is a good trick to make things stay side by side. */
+    display: flex;
+  }
+
+  &__photo {
+    /* This is classic example why we sometime have to set the box-sizing back to the default (content-box). In this case, it is because when we add border to this tiny image, it will appear much smaller than we want. We can either to have bigger height & width or reset box-sizing property to its default to have the default box model architecture. This way, it is will not shrink the image further, instead it grows bigger as a result. */
+    box-sizing: content-box;
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    border: 0.3rem solid #fff;
+
+    &:not(:last-child) {
+      margin-right: -1.5rem;
+    }
+  }
+}
+
+/* ########################################################################## */
+/*                                   Reviews                                  */
+/* ########################################################################## */
+
+.review {
+  background-color: #fff;
+  box-shadow: var(--shadow-light);
+  padding: 3rem;
+  margin-bottom: 3.5rem;
+  position: relative;
+  /* To fix the overflowing of the quotation mark */
+  overflow: hidden;
+
+  @media (max-width: $bp-medium) {
+    padding: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  &__text {
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+  }
+
+  &__photo {
+    height: 4.5rem;
+    width: 4.5rem;
+    border-radius: 50%;
+    margin-right: 1.5rem;
+  }
+
+  &__user-box {
+    margin-right: auto;
+  }
+
+  &__user-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  &__user-date {
+    font-size: 1rem;
+    color: var(--color-grey-dark-3);
+  }
+
+  &__rating {
+    color: var(--color-primary);
+    font-size: 2.2rem;
+    font-weight: 300;
+  }
+
+  &::before {
+    content: '\201C';
+    position: absolute;
+    top: -2.75rem;
+    left: -1rem;
+    font-size: 20rem;
+    font-family: sans-serif;
+    line-height: 1;
+    color: var(--color-grey-light-2);
+    z-index: 1;
+  }
+}
+
+/* ########################################################################## */
+/*                            CTA (call to action)                            */
+/* ########################################################################## */
+
+.cta {
+  padding: 3.5rem 0;
+  text-align: center;
+
+  @media (max-width: $bp-medium) {
+    padding: 2.5rem 0;
+  }
+
+  &__book-now {
+    font-size: 2rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+  }
+}
+
+/* ########################################################################## */
+/*                                 CTA Buttons                                */
+/* ########################################################################## */
+
+.btn {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #fff;
+  border: none;
+  text-transform: uppercase;
+  border-radius: 100px;
+  background-image: linear-gradient(to right, var(--color-primary-light), var(--color-primary-dark));
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+
+  & > * {
+    /* Set the inline <span> element become inline-block so that we can add padding to it. */
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    transition: all 0.2s;
+  }
+
+  &__visible {
+    /* We deliberately use padding to make the button appear bigger. */
+    padding: 2rem 7.5rem;
+  }
+
+  &__invisible {
+    padding: 2rem 0;
+    position: absolute;
+    left: 0;
+    top: -100%;
+  }
+
+  &:hover {
+    /* This one we can't add transition property for it in its parent element because transition doesn't work for background gradient. */
+    background-image: linear-gradient(to left, var(--color-primary-light), var(--color-primary-dark));
+  }
+
+  &:hover &__visible {
+    transform: translateY(100%);
+  }
+
+  &:hover &__invisible {
+    top: 0;
+  }
+
+  &:focus {
+    outline: none;
+    animation: pulsate 1s infinite;
+  }
+}
